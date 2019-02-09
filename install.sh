@@ -2,7 +2,7 @@
 
 # Setup env
 sudo apt-get update
-sudo apt-get install -y qemu git
+sudo apt-get install -y qemu git #In case you wonder why git is here too, I distribute this not only by git...
 
 # Get OS
 wget https://downloads.raspberrypi.org/raspbian_lite_latest
