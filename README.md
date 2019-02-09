@@ -1,6 +1,6 @@
 # What is this?
 
-An installer for a emulated Raspberry Pi Environment. Though, we use another device definition so we can use the current Rasbian image.
+An installer for an emulated Raspberry Pi Environment. Though, we use another device definition so we can use the current Rasbian image.
 
 ## Licence
 
