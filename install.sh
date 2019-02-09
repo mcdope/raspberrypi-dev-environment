@@ -12,7 +12,6 @@ rm raspbian_lite_latest
 
 # Get Kernel and DTB
 git clone git@github.com:dhruvvyas90/qemu-rpi-kernel.git raspbian_bootpart
-touch raspbian_bootpart/ssh # the "pi" should start ssh daemon automatically when this file exists on bootpart
 
 echo
 echo Done!
