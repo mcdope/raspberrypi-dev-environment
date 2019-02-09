@@ -1,5 +1,4 @@
 #!/bin/bash
-./update.sh
 ./environment-notice.sh
 
 qemu-system-arm \
