@@ -1,3 +1,6 @@
 [submodule "raspberry_bootpart"]
 	path = raspberry_bootpart
 	url = https://github.com/dhruvvyas90/qemu-rpi-kernel
+[submodule "raspbian_bootpart"]
+	path = raspbian_bootpart
+	url = https://github.com/dhruvvyas90/qemu-rpi-kernel
