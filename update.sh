@@ -11,4 +11,5 @@ mv *-raspbian-stretch-lite.img raspbian-stretch-lite.img #to make it have a know
 rm raspbian_lite_latest
 
 # Grow image so we have more room for custom stuff
-sudo qemu-img resize raspbian-stretch-lite.img +2G #adjust size if needed
+# Be aware that u manually have to finish this, see https://gist.github.com/larsks/3933980
+# sudo qemu-img resize raspbian-stretch-lite.img +2G #adjust size if needed
