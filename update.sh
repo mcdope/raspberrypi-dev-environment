@@ -12,4 +12,5 @@ rm raspbian_lite_latest
 
 # Grow image so we have more room for custom stuff
 # Be aware that u manually have to finish this, see https://gist.github.com/larsks/3933980
+# Be also aware, that despite the tutorial saying you can keep the defaults I needed to put the correct sectors myself into fdisk!
 # sudo qemu-img resize raspbian-stretch-lite.img +2G #adjust size if needed
