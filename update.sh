@@ -5,12 +5,8 @@ git fetch
 git pull --recurse-submodules
 
 # Get OS
-wget https://downloads.raspberrypi.org/raspbian_lite_latest
+# wget https://downloads.raspberrypi.org/raspbian_lite_latest # <-- Original OS
+wget -O raspbian_lite_latest https://www.dropbox.com/s/u1dxfboxr4drg5k/raspbian-stretch-lite.grown.updated.pimirror.zip?dl=0 # <-- pimirror variant - pregrown, customized, updated and preinstalled
 unzip -o raspbian_lite_latest
 mv *-raspbian-stretch-lite.img raspbian-stretch-lite.img #to make it have a known name so we dont need to grep around
 rm raspbian_lite_latest
-
-# Grow image so we have more room for custom stuff
-# Be aware that u manually have to finish this, see https://gist.github.com/larsks/3933980
-# Be also aware, that despite the tutorial saying you can keep the defaults I needed to put the correct sectors myself into fdisk!
-# sudo qemu-img resize raspbian-stretch-lite.img +2G #adjust size if needed
