@@ -18,7 +18,7 @@ x-terminal-emulator -e "qemu-system-aarch64 \
   -device virtio-net-device,netdev=net0 \
   -no-reboot
   -accel kvm,thread=multi
-  -smp cpus=1,cores=$CPUCORES_QEMU
+  -smp cpus=$CPUCORES_QEMU
   -k $KEYBOARD_LAYOUT
   -name raspberrypi-dev-environment
   -no-quit"

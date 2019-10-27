@@ -29,8 +29,10 @@ if [ -d "arch_bootpart" ]; then
 fi
 
 # Create "HDD" image
-dd if=/dev/zero bs=2M count=2048 > $IMAGEFILE
+echo "Creating HDD image..."
+dd status=none if=/dev/zero bs=2M count=2048 > $IMAGEFILE 
 
+echo "Partioning image..."
 # Partition image (see https://superuser.com/a/332322/462629)
 (
 echo o # Create a new empty DOS partition table
@@ -49,53 +51,87 @@ echo   # Last sector (Accept default: varies)
 echo w # Write changes
 ) | fdisk $IMAGEFILE
 
+clear
 # Download rootfs
+echo "Downloading archlinux-arm rootfs..."
+echo
+echo
 wget http://dk.mirror.archlinuxarm.org/os/ArchLinuxARM-rpi-3-latest.tar.gz
+echo
+echo
 
 # Mount image as loopback device and format FS(es)
+echo "Mounting image as loopdevice..."
 sudo kpartx -a $IMAGEFILE
-sudo mkfs.vfat /dev/mapper/loop0p1
-sudo mkfs.ext4 /dev/mapper/loop0p2
+echo
+echo "Formatting FAT /boot..."
+echo
+sudo mkfs.vfat /dev/mapper/loop0p1 > /dev/null
+echo
+echo
+echo
+echo "Formatting ext4 /..."
+sudo mkfs.ext4 /dev/mapper/loop0p2 > /dev/null
+echo
+echo
 
 # Create mountpoints and mount partitions
+echo "Mounting image partitions..."
 mkdir boot
 mkdir root
 sudo mount /dev/mapper/loop0p1 boot
 sudo mount /dev/mapper/loop0p2 root
 
 # Extract rootfs
+echo "Extracting rootfs..."
 sudo bsdtar -xpf ArchLinuxARM-rpi-3-latest.tar.gz -C root
 sync
 
 # Move boot files to bootpart (part 1)
+echo "Moving root/boot to /boot..."
 sudo mv root/boot/* boot
+sync
 
 # Copy files we need to boot QEMU
+echo "Copying /boot for qemu..."
 mkdir arch_bootpart
 cp -R boot/* arch_bootpart/
 
 # Adjust fstab for qemu
+echo "Adjusting /etc/fstab for qemu..."
 sudo sed -i 's/mmcblk0p/vda/g' root/etc/fstab
 
 # Enable password auth for ssh on root for copy id
+echo "Enable password login for root over ssh..."
 sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' root/etc/ssh/sshd_config
 
 
 # Unmount everything
+echo "Syncing fs'es before unmounting..."
+sync
+
+echo "Unmounting image partitions..."
 sudo umount boot
 sleep 1
 sudo umount root
 sleep 1
+echo "Unmounting image loopdevice..."
 sudo kpartx -d $IMAGEFILE
 sleep 1
 
 # Cleanup
-rm boot
-rm root
+echo "Cleaning up..."
+rm -rf boot
+rm -rf root
 rm ArchLinuxARM-rpi-3-latest.tar.gz
 
+echo
 echo "Image created, initializing now..."
 echo "(this will take a while, VM will boot for it and be shutdown again when finished)"
+echo
+echo
+echo
+sleep 5
 
 ./init_arch.sh
 
