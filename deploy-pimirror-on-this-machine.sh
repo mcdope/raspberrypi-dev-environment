@@ -1,16 +1,29 @@
 #!/bin/bash
 
-mkdir -p /var/www/html/mirror/config
-mkdir -p /var/www/html/mirror/frontend-build-env
+MIRRORDIR=/srv/http/mirror
+
+# Update AUR / pacman repos
+pacman --noconfirm -Sy
+
+# Install required minimum packages to run our installers
+pacman --noconfirm -S git sudo
+mkdir -p $MIRRORDIR/config
+mkdir -p $MIRRORDIR/frontend-build-env
 
 # Setup backend
+echo
+echo "Installing backend..."
+echo
 mkdir config
-cd /var/www/html/mirror/config
+cd $MIRRORDIR/config
 git clone https://bitbucket.org/pimirror/raspberrypi-mirror-configuration.git .
 ./install.sh
 
 # Setup frontend
-cd /var/www/html/mirrorfrontend-build-env
+echo
+echo "Installing frontend..."
+echo
+cd $MIRRORDIR/mirrorfrontend-build-env
 git clone https://bitbucket.org/pimirror/raspberrypi-mirror-framework.git .
 npm install && npm run build && yes | cp -rf ./dist/* ../
 
