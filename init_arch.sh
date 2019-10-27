@@ -37,6 +37,12 @@ ssh root@localhost -p 5022 "pacman-key --populate archlinuxarm"
 #fi
 #scp -r -P 5022 arch_bootpart root@localhost:/boot
 
+# Push deploy script into VM
+scp -P 5022 deploy-pimirror-on-this-machine.sh root@localhost:/root/
+
+# Deploy ssh-key
+scp -P 5022 ./.vm-sshkey/* alarm@localhost:/home/alarm/.ssh/
+
 # ... we are a bit paranoid and ensure we have a consistent image
 ssh root@localhost -p 5022 "sync"
 ssh root@localhost -p 5022 "shutdown now"
