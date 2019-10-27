@@ -29,7 +29,7 @@ if [ -d "arch_bootpart" ]; then
 fi
 
 # Create "HDD" image
-dd if=/dev/zero bs=2M count=1000 > $IMAGEFILE
+dd if=/dev/zero bs=2M count=2048 > $IMAGEFILE
 
 # Partition image (see https://superuser.com/a/332322/462629)
 (
