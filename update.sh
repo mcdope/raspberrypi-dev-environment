@@ -82,15 +82,26 @@ sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' root/et
 
 
 # Unmount everything
-sudo umount boot 
+sudo umount boot
+sleep 1
 sudo umount root
+sleep 1
 sudo kpartx -d $IMAGEFILE
+sleep 1
 
 # Cleanup
-rm -rf boot
-rm -rf root
+rm boot
+rm root
 rm ArchLinuxARM-rpi-3-latest.tar.gz
 
 echo "Image created, initializing now..."
+echo "(this will take a while, VM will boot for it and be shutdown again when finished)"
+
 ./init_arch.sh
+
+echo
+echo "... VM ready, done!"
+echo
+echo "To start the VM run \"boot.sh\"."
+echo "After booting you can connect by running \"ssh -p 5022 alarm@localhost\", or if you want to be root \"ssh -p 5022 root@localhost\""
 

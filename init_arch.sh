@@ -3,7 +3,7 @@
 # Boot the VM
 ./boot.sh > /dev/null
 
-# Removing host key from known_hosts
+# Removing previous vm host key from known_hosts
 ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[localhost]:5022"
 
 echo "VM booting... waiting 60s for it to finish booting before continuing..."
@@ -19,8 +19,8 @@ echo "root" | sshpass ssh-copy-id -i ~/.ssh/id_rsa.pub root@localhost -p 5022
 
 # Init pacman
 echo "Initing pacman..."
-ssh root@localhost -p 5022 "pacman-key --init"
-ssh root@localhost -p 5022 "pacman-key --populate archlinuxarm"
+ssh root@localhost -p 5022 "pacman-key --init 2>&1 /dev/null"
+ssh root@localhost -p 5022 "pacman-key --populate archlinuxarm 2>&1 /dev/null"
 
 # Upgrade system
 # note: arch is a rolling distri, so maybe this isnt exactly smart, 
@@ -38,18 +38,15 @@ ssh root@localhost -p 5022 "pacman-key --populate archlinuxarm"
 #scp -r -P 5022 arch_bootpart root@localhost:/boot
 
 # Push deploy script into VM
+echo "Pushing deploy script into VM..."
 scp -P 5022 deploy-pimirror-on-this-machine.sh root@localhost:/root/
 
 # Deploy ssh-key
+echo "Pushing ssh-key for repository access into VM..."
 scp -P 5022 ./.vm-sshkey/* alarm@localhost:/home/alarm/.ssh/
 
 # ... we are a bit paranoid and ensure we have a consistent image
-ssh root@localhost -p 5022 "sync"
-ssh root@localhost -p 5022 "shutdown now"
+echo "Syncing HDD image and shutdown VM..."
+ssh root@localhost -p 5022 "sync" 2>&1 /dev/null
+ssh root@localhost -p 5022 "shutdown now" 2>&1 /dev/null
 sleep 10
-
-echo
-echo "... VM ready, done!"
-echo
-echo "To start the VM run \"boot.sh\"."
-echo "After booting you can connect by running \"ssh -p 5022 alarm@localhost\", or if you want to be root \"ssh -p 5022 root@localhost\""
