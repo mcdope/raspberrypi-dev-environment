@@ -1,8 +1,8 @@
 #!/bin/bash
 CPUCORES=`getconf _NPROCESSORS_ONLN`
-KEYBOARD_LAYOUT=`setxkbmap -query | grep layout | cut -d' ' -f6`
+KEYBOARD_LAYOUT=`setxkbmap -query | grep layout | cut -d' ' -f6 | cut -d',' -f1`
 
-echo "WARNING: You can login in the serial terminal that opens, but don't dare to press CTRL+C!"
+echo "WARNING: You could login in the serial terminal (the one with boot messages) that opens, but don't dare to press CTRL+C!"
 echo " (it would terminate the VM without proper shutdown, expect your VM to break...)"
 echo
 echo "For that reason I highly recommend to login in the graphical window (titled 'QEMU - raspberrypi-dev-environment')!"
@@ -24,5 +24,10 @@ x-terminal-emulator -e "qemu-system-aarch64 \
   -netdev user,id=net0,hostfwd=tcp::5022-:22 \
   -device virtio-net-device,netdev=net0 \
   -device virtio-gpu-pci \
+  -vga std \
+  -device usb-ehci \
+  -device usb-tablet \
+  -device usb-kbd \
+  -show-cursor \
   -no-reboot \
   -no-quit; sleep 30"
