@@ -5,20 +5,25 @@ MIRRORDIR=/srv/http/mirror
 # Update AUR / pacman repos
 pacman --noconfirm -Sy
 
-# Install required minimum packages to run our installers
+# Install required minimum packages to run our installers and configure sudo for password-less POWAAAAAAAAH
 pacman --noconfirm -S git sudo
 echo "alarm ALL=(ALL) ALL" >> /etc/sudoers
 echo 'Defaults:alarm !authenticate' >> /etc/sudoers # single-quotes are important here because of the bang!
 
-mkdir -p $MIRRORDIR/config
+mkdir -p $MIRRORDIR/raspberrypi-mirror-configuration
+ln -s $MIRRORDIR/raspberrypi-mirror-configuration/php-src $MIRRORDIR/config
 mkdir -p $MIRRORDIR/frontend-build-env
 chmod -R 0777 $MIRRORDIR
+
+# Create inotify dir
+mkdir -p $MIRRORDIR/inotify_sockets
+sudo chmod -R 0777 inotify_sockets
 
 # Setup backend
 echo
 echo "Installing backend..."
 echo
-cd $MIRRORDIR/config
+cd $MIRRORDIR/raspberrypi-mirror-configuration
 git clone git@bitbucket.org:pimirror/raspberrypi-mirror-configuration.git .
 ./install.sh
 
