@@ -1,5 +1,7 @@
 #!/bin/bash
 
+KEYBOARD_LAYOUT=`setxkbmap -query | grep layout | cut -d' ' -f6 | cut -d',' -f1`
+
 # Boot the VM
 ./boot.sh > /dev/null
 
@@ -51,6 +53,10 @@ echo
 #    mkdir arch_bootpart
 #fi
 #scp -r -P 5022 arch_bootpart root@localhost:/boot
+
+echo "Setting keyboard layout..."
+ssh root@localhost -p 5022 "localectl set-keymap --no-convert $KEYBOARD_LAYOUT" > /dev/null
+echo
 
 # Push deploy script into VM
 echo "Pushing deploy script into VM..."
