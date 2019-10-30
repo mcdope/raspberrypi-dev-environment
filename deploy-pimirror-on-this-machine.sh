@@ -10,6 +10,7 @@ pacman --noconfirm -S git sudo
 echo "alarm ALL=(ALL) ALL" >> /etc/sudoers
 echo 'Defaults:alarm !authenticate' >> /etc/sudoers # single-quotes are important here because of the bang!
 
+usermod -a -G http alarm
 mkdir -p $MIRRORDIR/raspberrypi-mirror-configuration
 ln -s $MIRRORDIR/raspberrypi-mirror-configuration/php-src $MIRRORDIR/config
 mkdir -p $MIRRORDIR/frontend-build-env
@@ -30,11 +31,11 @@ sudo -u alarm ./install.sh
 echo
 echo "Installing frontend..."
 echo
-cd $MIRRORDIR/mirrorfrontend-build-env
+cd $MIRRORDIR/frontend-build-env
 sudo -u alarm git clone git@bitbucket.org:pimirror/raspberrypi-mirror-framework.git .
 sudo -u alarm ./install_arch.sh
 
-chown -R http:alarm $MIRRORDIR
+chown -R alarm:http $MIRRORDIR
 
 IP=`ip route get 1 | sed -n 's/^.*src \([0-9.]*\) .*$/\1/p'`
 echo
