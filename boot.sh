@@ -16,6 +16,8 @@ x-terminal-emulator -e "qemu-system-aarch64 \
   -append \"rw root=/dev/vda2 console=ttyAMA0 loglevel=8 rootwait fsck.repair=yes memtest=1 audit=0 CONFIG_DRM=y CONFIG_DRM_VIRTIO_GPU=y\" \
   -m 1024 -M virt \
   -cpu cortex-a53 \
+  -accel tcg,thread=multi \
+  -smp cpus=$CPUCORES \
   -k $KEYBOARD_LAYOUT \
   -name raspberrypi-dev-environment \
   -serial stdio \
