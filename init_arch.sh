@@ -61,6 +61,7 @@ echo
 # Push deploy script into VM
 echo "Pushing deploy script into VM..."
 scp -P 5022 deploy-pimirror-on-this-machine.sh root@localhost:/root/
+ssh root@localhost -p 5022 "chmod +x /root/deploy-pimirror-on-this-machine.sh"
 echo
 
 # Deploy ssh-key

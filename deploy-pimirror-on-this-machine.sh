@@ -13,27 +13,28 @@ echo 'Defaults:alarm !authenticate' >> /etc/sudoers # single-quotes are importan
 mkdir -p $MIRRORDIR/raspberrypi-mirror-configuration
 ln -s $MIRRORDIR/raspberrypi-mirror-configuration/php-src $MIRRORDIR/config
 mkdir -p $MIRRORDIR/frontend-build-env
-chmod -R 0777 $MIRRORDIR
 
 # Create inotify dir
 mkdir -p $MIRRORDIR/inotify_sockets
-sudo chmod -R 0777 inotify_sockets
 
 # Setup backend
 echo
 echo "Installing backend..."
 echo
+chmod -R 0777 $MIRRORDIR
 cd $MIRRORDIR/raspberrypi-mirror-configuration
-git clone git@bitbucket.org:pimirror/raspberrypi-mirror-configuration.git .
-./install.sh
+sudo -u alarm git clone git@bitbucket.org:pimirror/raspberrypi-mirror-configuration.git .
+sudo -u alarm ./install.sh
 
 # Setup frontend
 echo
 echo "Installing frontend..."
 echo
 cd $MIRRORDIR/mirrorfrontend-build-env
-git clone git@bitbucket.org:pimirror/raspberrypi-mirror-framework.git .
-./install_arch.sh
+sudo -u alarm git clone git@bitbucket.org:pimirror/raspberrypi-mirror-framework.git .
+sudo -u alarm ./install_arch.sh
+
+chown -R http:alarm $MIRRORDIR
 
 IP=`ip route get 1 | sed -n 's/^.*src \([0-9.]*\) .*$/\1/p'`
 echo
