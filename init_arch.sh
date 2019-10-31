@@ -70,6 +70,12 @@ scp -P 5022 ./.vm-sshkey/* alarm@localhost:/home/alarm/.ssh/
 echo
 echo
 
+echo "Enabling autologin on tty1..."
+ssh root@localhost -p 5022 "mkdir /etc/systemd/system/getty@tty1.service.d"
+ssh root@localhost -p 5022 "echo '[Service]' > /etc/systemd/system/getty@tty1.service.d/override.conf"
+ssh root@localhost -p 5022 "echo 'ExecStart=' >> /etc/systemd/system/getty@tty1.service.d/override.conf"
+ssh root@localhost -p 5022 "echo 'ExecStart=-/usr/bin/agetty --autologin alarm --noclear %I \$TERM' >> /etc/systemd/system/getty@tty1.service.d/override.conf"
+
 # ... we are a bit paranoid and ensure we have a consistent image
 echo "Syncing HDD image and shutdown VM..."
 ssh root@localhost -p 5022 "sync"
