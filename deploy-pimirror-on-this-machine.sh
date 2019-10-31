@@ -33,7 +33,7 @@ echo "Installing frontend..."
 echo
 cd $MIRRORDIR/frontend-build-env
 sudo -u alarm git clone git@bitbucket.org:pimirror/raspberrypi-mirror-framework.git .
-sudo -u alarm ./install_arch.sh
+sudo -u alarm ./install_arch.sh Virtual-1
 
 chown -R alarm:http $MIRRORDIR
 
