@@ -24,16 +24,14 @@ echo "Installing backend..."
 echo
 chmod -R 0777 $MIRRORDIR
 cd $MIRRORDIR/raspberrypi-mirror-configuration
-sudo -u alarm git clone git@bitbucket.org:pimirror/raspberrypi-mirror-configuration.git .
-sudo -u alarm ./install.sh
+sudo -u alarm GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@bitbucket.org:pimirror/raspberrypi-mirror-configuration.git . && sudo -u alarm ./install.sh
 
 # Setup frontend
 echo
 echo "Installing frontend..."
 echo
 cd $MIRRORDIR/frontend-build-env
-sudo -u alarm git clone git@bitbucket.org:pimirror/raspberrypi-mirror-framework.git .
-sudo -u alarm ./install_arch.sh Virtual-1
+sudo -u alarm GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@bitbucket.org:pimirror/raspberrypi-mirror-framework.git . && sudo -u alarm ./install_arch.sh Virtual-1
 
 chown -R alarm:http $MIRRORDIR
 

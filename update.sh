@@ -65,11 +65,7 @@ echo "Mounting image as loopdevice..."
 sudo kpartx -a $IMAGEFILE
 echo
 echo "Formatting FAT /boot..."
-echo
 sudo mkfs.vfat /dev/mapper/loop0p1 > /dev/null
-echo
-echo
-echo
 echo "Formatting ext4 /..."
 sudo mkfs.ext4 /dev/mapper/loop0p2 > /dev/null
 echo

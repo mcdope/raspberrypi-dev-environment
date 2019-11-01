@@ -75,6 +75,13 @@ ssh root@localhost -p 5022 "mkdir /etc/systemd/system/getty@tty1.service.d"
 ssh root@localhost -p 5022 "echo '[Service]' > /etc/systemd/system/getty@tty1.service.d/override.conf"
 ssh root@localhost -p 5022 "echo 'ExecStart=' >> /etc/systemd/system/getty@tty1.service.d/override.conf"
 ssh root@localhost -p 5022 "echo 'ExecStart=-/usr/bin/agetty --autologin alarm --noclear %I \$TERM' >> /etc/systemd/system/getty@tty1.service.d/override.conf"
+echo
+echo
+
+echo "Running deploy script in VM..."
+ssh root@localhost -p 5022 "/root/deploy-pimirror-on-this-machine.sh"
+echo
+echo
 
 # ... we are a bit paranoid and ensure we have a consistent image
 echo "Syncing HDD image and shutdown VM..."
