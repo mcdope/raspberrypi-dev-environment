@@ -79,7 +79,7 @@ echo
 echo
 
 echo "Running deploy script in VM..."
-ssh root@localhost -p 5022 "/root/deploy-pimirror-on-this-machine.sh"
+time ssh root@localhost -p 5022 "/root/deploy-pimirror-on-this-machine.sh"
 echo
 echo
 
