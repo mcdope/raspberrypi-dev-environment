@@ -22,7 +22,7 @@ x-terminal-emulator -e "qemu-system-aarch64 \
   -name raspberrypi-dev-environment \
   -serial stdio \
   -drive file=arch-pimirror.img,if=virtio,cache=none \
-  -netdev user,id=net0,hostfwd=tcp::5022-:22 \
+  -netdev user,id=net0,hostfwd=tcp::5022-:22,hostfwd=tcp::9999-:9999 \
   -device virtio-net-device,netdev=net0 \
   -device virtio-gpu-pci \
   -vga std \
