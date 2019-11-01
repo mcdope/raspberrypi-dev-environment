@@ -30,7 +30,7 @@ fi
 
 # Create "HDD" image
 echo "Creating HDD image..."
-dd status=none if=/dev/zero bs=2M count=2048 > $IMAGEFILE 
+dd status=none if=/dev/zero bs=524288 count=16384 > $IMAGEFILE 
 
 echo "Partioning image..."
 # Partition image (see https://superuser.com/a/332322/462629)
