@@ -8,5 +8,8 @@ scp -P 5022 alarm@localhost:/srv/http/mirror/frontend-build-env/npm_preload.tar.
 echo "Uploading to distribution ftp..."
 curl -T npm_preload.tar.gz ftp://mcdope.org --user pimirror:p1m1rr0r
 
+echo "Removing local file..."
+rm npm_preload.tar.gz
+
 echo
 echo "DONE!"
