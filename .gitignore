@@ -4,3 +4,4 @@ raspbian-stretch-lite.grown.updated.pimirror.zip
 arch_bootpart
 *.img.old
 .vscode/
+*.tar.gz

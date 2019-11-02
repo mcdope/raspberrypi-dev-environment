@@ -28,10 +28,21 @@ sudo -u alarm GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHost
 
 # Setup frontend
 echo
-echo "Installing frontend..."
+echo "Cloning frontend..."
 echo
 cd $MIRRORDIR/frontend-build-env
-sudo -u alarm GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@bitbucket.org:pimirror/raspberrypi-mirror-framework.git . && sudo -u alarm ./install_arch.sh Virtual-1
+sudo -u alarm GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@bitbucket.org:pimirror/raspberrypi-mirror-framework.git .
+
+echo
+echo "Preloading frontend node_modules..."
+wget ftp://pimirror:p1m1rr0r@mcdope.org/npm_preload.tar.gz
+tar xzf npm_preload.tar.gz
+rm npm_preload.tar.gz
+
+echo
+echo "Installing frontend..."
+sudo -u alarm ./install_arch.sh Virtual-1
+
 
 chown -R alarm:http $MIRRORDIR
 
