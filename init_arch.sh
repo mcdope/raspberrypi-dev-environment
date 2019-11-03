@@ -81,6 +81,7 @@ echo
 echo "Ensure VM will use bridged networking as primary connection..."
 ssh alarm@localhost -p 5022 "echo '# Enforce using bridged networking by lower metric' > ~/.bash_profile"
 ssh alarm@localhost -p 5022 "echo \"ip route add default via $(ip route | grep default | grep -v \"10.0\" | awk '{print $3}') metric 100\" >> ~/.bash_profile"
+ssh alarm@localhost -p 5022 "echo \"export QTWEBENGINE_REMOTE_DEBUGGING=$(ip route get 1 | sed -n 's/^.*src \([0-9.]*\) .*$/\1/p'):9999\" >> ~/.bash_profile"
 
 echo "Running deploy script in VM..."
 time ssh root@localhost -p 5022 "/root/deploy-pimirror-on-this-machine.sh"
