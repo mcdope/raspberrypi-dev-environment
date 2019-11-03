@@ -78,6 +78,10 @@ ssh root@localhost -p 5022 "echo 'ExecStart=-/usr/bin/agetty --autologin alarm -
 echo
 echo
 
+echo "Ensure VM will use bridged networking as primary connection..."
+ssh alarm@localhost -p 5022 "echo '# Enforce using bridged networking by lower metric' > ~/.bash_profile"
+ssh alarm@localhost -p 5022 "echo \"ip route add default via $(ip route | grep default | grep -v \"10.0\" | awk '{print $3}') metric 100\" >> ~/.bash_profile"
+
 echo "Running deploy script in VM..."
 time ssh root@localhost -p 5022 "/root/deploy-pimirror-on-this-machine.sh"
 echo
