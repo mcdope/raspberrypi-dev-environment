@@ -1,4 +1,11 @@
 #!/bin/bash
+
+echo
+echo 'Reminder: you need to run ./netbridge_create.sh before this!'
+echo "You have 10secs to CTRL+C in case you haven't yet"
+echo
+sleep 10
+
 CPUCORES=`getconf _NPROCESSORS_ONLN`
 KEYBOARD_LAYOUT=`setxkbmap -query | grep layout | cut -d' ' -f6 | cut -d',' -f1`
 

@@ -4,6 +4,12 @@
 # git fetch
 # git pull --recurse-submodules
 
+echo
+echo 'Reminder: you need to run ./netbridge_create.sh before this!'
+echo "You have 10secs to CTRL+C in case you haven't yet"
+echo
+sleep 10
+
 IMAGEFILE="arch-pimirror.img"
 
 # Rename image if exists
