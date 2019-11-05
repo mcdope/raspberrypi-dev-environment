@@ -1,10 +1,7 @@
 #!/bin/bash
 
-echo
-echo 'Reminder: you need to run ./netbridge_create.sh before this!'
-echo "You have 10secs to CTRL+C in case you haven't yet"
-echo
-sleep 10
+echo "Creating network bridge..."
+sudo ./netbridge_create.sh
 
 CPUCORES=`getconf _NPROCESSORS_ONLN`
 KEYBOARD_LAYOUT=`setxkbmap -query | grep layout | cut -d' ' -f6 | cut -d',' -f1`
@@ -41,3 +38,6 @@ x-terminal-emulator -e "qemu-system-aarch64 \
   -show-cursor \
   -no-reboot \
   -no-quit"
+
+echo "Removing previously created network bridge..."
+sudo ./netbridge_delete.sh

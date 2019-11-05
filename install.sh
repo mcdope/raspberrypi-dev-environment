@@ -2,7 +2,7 @@
 
 # Setup env
 sudo apt-get update
-sudo apt-get install -y qemu qemu-system git wget unzip kpartx fdisk libarchive-tools sed uml-utilities #In case you wonder why git is here too, I distribute this not only by git...
+sudo apt-get install -y qemu qemu-system git wget unzip kpartx fdisk libarchive-tools sed uml-utilities bridge-utils net-tools #In case you wonder why git is here too, I distribute this not only by git...
 
 # Init git
 #if [ ! -d ".git" ]; then

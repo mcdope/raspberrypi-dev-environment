@@ -1,16 +1,12 @@
 #!/bin/bash
 
-# Update repo and device/kernel submodule
-# git fetch
-# git pull --recurse-submodules
-
-echo
-echo 'Reminder: you need to run ./netbridge_create.sh before this!'
-echo "You have 10secs to CTRL+C in case you haven't yet"
-echo
-sleep 10
-
 IMAGEFILE="arch-pimirror.img"
+
+echo "Killing some 'known to be assholes' processes that might interfer..."
+sudo killall tracker-miner-fs
+sudo killall tracker-miner-apps
+sudo killall tracker-store
+sudo killall dropbox
 
 # Rename image if exists
 if [ -f "$IMAGEFILE" ]; then
