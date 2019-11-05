@@ -14,7 +14,7 @@ echo
 
 sleep 5
 
-x-terminal-emulator -e "qemu-system-aarch64 \
+sudo x-terminal-emulator -e "qemu-system-aarch64 \
   -kernel arch_bootpart/Image.gz \
   -initrd arch_bootpart/initramfs-linux.img \
   -append \"rw root=/dev/vda2 console=ttyAMA0 loglevel=8 rootwait fsck.repair=yes memtest=1 audit=0 CONFIG_DRM=y CONFIG_DRM_VIRTIO_GPU=y\" \
@@ -38,6 +38,3 @@ x-terminal-emulator -e "qemu-system-aarch64 \
   -show-cursor \
   -no-reboot \
   -no-quit"
-
-echo "Removing previously created network bridge..."
-sudo ./netbridge_delete.sh
