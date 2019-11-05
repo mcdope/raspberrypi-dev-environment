@@ -9,6 +9,7 @@ sudo apt-get install -y qemu qemu-system git wget unzip kpartx fdisk libarchive-
 #	git clone https://github.com/mcdope/raspberrypi-dev-environment .
 #fi
 
+
 ./update.sh
 
 echo

@@ -39,6 +39,7 @@ ssh root@localhost -p 5022 "pacman-key --populate archlinuxarm" > /dev/null
 echo
 echo
 
+<<<<<<< HEAD
 # Upgrade system
 # note: arch is a rolling distri, so maybe this isnt exactly smart, 
 # i.e largerswitches causing breaking. So keep in mind...
@@ -54,6 +55,8 @@ echo
 #fi
 #scp -r -P 5022 arch_bootpart root@localhost:/boot
 
+=======
+>>>>>>> master
 echo "Setting keyboard layout..."
 ssh root@localhost -p 5022 "localectl set-keymap --no-convert $KEYBOARD_LAYOUT" > /dev/null
 echo
@@ -89,6 +92,9 @@ echo "Running deploy script in VM..."
 time ssh root@localhost -p 5022 "/root/deploy-pimirror-on-this-machine.sh"
 echo
 echo
+
+echo "Disable password login for root over ssh (got enabled by update.sh)..."
+sudo sed -i 's/PermitRootLogin prohibit-password/#PermitRootLogin yes/g' root/etc/ssh/sshd_config
 
 # ... we are a bit paranoid and ensure we have a consistent image
 echo "Syncing HDD image and shutdown VM..."
