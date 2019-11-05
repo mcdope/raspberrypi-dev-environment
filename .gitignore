@@ -1,2 +1,4 @@
-*.img
-raspbian_lite_latest
+*.img*
+.vscode/
+arch_bootpart/
+
