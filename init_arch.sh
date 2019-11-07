@@ -39,24 +39,6 @@ ssh root@localhost -p 5022 "pacman-key --populate archlinuxarm" > /dev/null
 echo
 echo
 
-<<<<<<< HEAD
-# Upgrade system
-# note: arch is a rolling distri, so maybe this isnt exactly smart, 
-# i.e largerswitches causing breaking. So keep in mind...
-#echo "Upgrading system..."
-#ssh root@localhost -p 5022 "pacman --noconfirm -Syu"
-
-# Updating arch_bootpart for qemu
-#echo "Copying updated /boot to arch_bootpart..."
-#if [ -d "arch_bootpart" ]; then
-#    rm -rf arch_bootpart
-#    echo "Info: removed previous arch_bootpart"
-#    mkdir arch_bootpart
-#fi
-#scp -r -P 5022 arch_bootpart root@localhost:/boot
-
-=======
->>>>>>> master
 echo "Setting keyboard layout..."
 ssh root@localhost -p 5022 "localectl set-keymap --no-convert $KEYBOARD_LAYOUT" > /dev/null
 echo
