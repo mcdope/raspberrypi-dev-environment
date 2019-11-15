@@ -109,9 +109,10 @@ echo "Syncing fs'es before unmounting..."
 sync
 
 echo "Unmounting image partitions..."
-sudo umount boot
+sudo umount -dv boot
 sleep 1
-sudo umount root
+sudo killall tracker-miner-fs # tends to get restarted and will block umount'ing
+sudo umount -dv root
 sleep 1
 echo "Unmounting image loopdevice..."
 sudo kpartx -d $IMAGEFILE
