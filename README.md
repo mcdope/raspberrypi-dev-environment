@@ -17,7 +17,7 @@ But it's not an accurate replica of a real Pi.
 - somehow current PC
 - Ubuntu 19.04 or later (other Debian based distributions may work too, but totally untested)
 - sudo access
-- Internet connection
+- wired(!) Internet connection
 - about 10GB free drive space (8GB for the image file, about 520MB for Arch Linux download, some security reserve)
 
 ## Licence
@@ -44,8 +44,10 @@ Feel free to open an issue, I will see how I can help.
 
 The VM uses two networking connections. One for host-only networking with portforwarding to have a known address to connect to for setup. The other one
 for external networking, which will be forced as default connection. This uses a bridge named br0 which will be created by netbridge_create.sh when you
-run install.sh. It will autodetect your network connection to use for the bridge, but I only tested it with wired connections. Your mileage with WiFi, 
-or even multiple, connections will vary.
+run install.sh. It will autodetect your network connection to use for the bridge, but I only tested it with wired connections. 
+
+ATTENTION: WiFi is NOT supported since the network card in the VM is wired, the bridged devices needs to be wired too. This is because bridging happens
+on layer 3.
 
 ## Removing the network bridge create by install.sh/netbridge_create.sh
 
