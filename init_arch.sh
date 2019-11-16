@@ -20,10 +20,10 @@ sleep 60
 echo "VM should be booted, installing ssh key for alarm and root..."
 echo
 # note: we disable hostkeychecking because we just removed the key of the previous image, so obv its an unknown key
-echo "alarm" | sshpass ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa.pub alarm@localhost -p 5022 > /dev/null
+echo "alarm" | sshpass ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa.pub alarm@localhost -p 5022
 echo
 # note: this only works because we modified the image in update.sh - default config prohibits this
-echo "root" | sshpass ssh-copy-id -i ~/.ssh/id_rsa.pub root@localhost -p 5022 > /dev/null
+echo "root" | sshpass ssh-copy-id -i ~/.ssh/id_rsa.pub root@localhost -p 5022
 echo
 echo
 
@@ -52,6 +52,7 @@ echo
 # Deploy ssh-key
 echo "Pushing ssh-key for repository access into VM..."
 scp -P 5022 ./.vm-sshkey/* alarm@localhost:/home/alarm/.ssh/
+ssh root@localhost -p 5022 "chmod 0600 /home/alarm/.ssh/id_rsa /home/alarm/.ssh/id_rsa.pub"
 echo
 echo
 
@@ -65,8 +66,8 @@ echo
 
 echo "Ensure VM will use bridged networking as primary connection..."
 ssh alarm@localhost -p 5022 "echo '# Enforce using bridged networking by lower metric' > ~/.bash_profile"
-ssh alarm@localhost -p 5022 "echo \"ip route add default via $(ip route | grep default | grep -v \"10.0\" | awk '{print $3}') metric 100\" >> ~/.bash_profile"
-ssh alarm@localhost -p 5022 "echo \"export QTWEBENGINE_REMOTE_DEBUGGING=$(ip route get 1 | sed -n 's/^.*src \([0-9.]*\) .*$/\1/p'):9999\" >> ~/.bash_profile"
+ssh alarm@localhost -p 5022 "echo \"sudo ip route add default via \$(ip route | grep default | grep -v \"10.0\" | awk '{print \$3}') metric 100\" >> ~/.bash_profile"
+ssh alarm@localhost -p 5022 "echo \"export QTWEBENGINE_REMOTE_DEBUGGING=\$(ip route get 1 | sed -n 's/^.*src \([0-9.]*\) .*\$/\1/p'):9999\" >> ~/.bash_profile"
 echo
 echo
 
@@ -76,7 +77,7 @@ echo
 echo
 
 echo "Disable password login for root over ssh (got enabled by update.sh)..."
-sudo sed -i 's/PermitRootLogin prohibit-password/#PermitRootLogin yes/g' root/etc/ssh/sshd_config
+ssh root@localhost -p 5022 "sed -i 's/PermitRootLogin prohibit-password/#PermitRootLogin yes/g' /etc/ssh/sshd_config"
 
 # ... we are a bit paranoid and ensure we have a consistent image
 echo "Syncing HDD image and shutdown VM..."
