@@ -92,7 +92,7 @@ echo   # Last sector (Accept default: varies)
 echo w # Write changes
 ) | fdisk $IMAGEFILE
 
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -106,7 +106,7 @@ echo -n "[INFO] Downloading archlinux-arm rootfs..." >&3
 echo
 echo
 wget http://dk.mirror.archlinuxarm.org/os/ArchLinuxARM-rpi-3-latest.tar.gz
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -119,7 +119,7 @@ echo
 echo "[INFO] Mounting image as loopdevice..."
 echo -n "[INFO] Mounting image as loopdevice..." >&3
 sudo kpartx -a $IMAGEFILE
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -130,7 +130,7 @@ echo
 echo "[INFO] Formatting FAT /boot..."
 echo -n "[INFO] Formatting FAT /boot..." >&3
 sudo mkfs.vfat /dev/mapper/loop0p1 > /dev/null
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -140,7 +140,7 @@ fi
 echo "[INFO] Formatting ext4 /..."
 echo -n "[INFO] Formatting ext4 /..." >&3
 sudo mkfs.ext4 /dev/mapper/loop0p2 > /dev/null
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -155,7 +155,7 @@ echo -n "[INFO] Mounting image partitions..." >&3
 mkdir boot
 mkdir root
 sudo mount /dev/mapper/loop0p1 boot
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo -n " ... boot success!" >&3
 else
     echo " ... boot FAILED!" >&3
@@ -163,7 +163,7 @@ else
 fi
 
 sudo mount /dev/mapper/loop0p2 root
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... root success!" >&3
 else
     echo " ... root FAILED!" >&3
@@ -174,7 +174,7 @@ fi
 echo "[INFO] Extracting rootfs..."
 echo -n "[INFO] Extracting rootfs..." >&3
 sudo bsdtar -xpf ArchLinuxARM-rpi-3-latest.tar.gz -C root
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -187,7 +187,7 @@ sync
 echo "[INFO] Moving root/boot to /boot..."
 echo -n "[INFO] Moving root/boot to /boot..." >&3
 sudo mv root/boot/* boot
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -201,7 +201,7 @@ echo "[INFO] Copying /boot for qemu..."
 echo -n "[INFO] Copying /boot for qemu..." >&3
 mkdir arch_bootpart
 cp -R boot/* arch_bootpart/
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -212,7 +212,7 @@ fi
 echo "[INFO] Adjusting /etc/fstab for qemu..."
 echo -n "[INFO] Adjusting /etc/fstab for qemu..." >&3
 sudo sed -i 's/mmcblk0p/vda/g' root/etc/fstab
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -223,7 +223,7 @@ fi
 echo "[INFO] Enable password login for root over ssh..."
 echo -n "[INFO] Enable password login for root over ssh..." >&3
 sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' root/etc/ssh/sshd_config
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -239,7 +239,7 @@ sync
 echo "[INFO] Unmounting image partitions..."
 echo -n "[INFO] Unmounting image partitions..." >&3
 sudo umount -dv boot
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo -n " ... boot success!" >&3
 else
     echo " ... boot FAILED!" >&3
@@ -251,7 +251,7 @@ sleep 1
 sudo killall tracker-miner-fs # tends to get restarted and will block umount'ing
 
 sudo umount -dv root
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... root success!" >&3
 else
     echo " ... root FAILED!" >&3
@@ -267,9 +267,9 @@ fi
 
 sleep 1
 echo "[INFO] Unmounting image loopdevice..."
-echo "[INFO] Unmounting image loopdevice..." >&3
+echo -n "[INFO] Unmounting image loopdevice..." >&3
 sudo kpartx -d $IMAGEFILE
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
     echo " ... FAILED!" >&3
@@ -282,7 +282,7 @@ sleep 1
 echo "[INFO] Cleaning up..."
 echo -n "[INFO] Cleaning up..." >&3
 rm -rf boot
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo -n " ... boot success!" >&3
 else
     echo " ... boot FAILED!" >&3
@@ -290,7 +290,7 @@ else
 fi
 
 rm -rf root
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo -n " ... root success!" >&3
 else
     echo " ... root FAILED!" >&3
@@ -298,7 +298,7 @@ else
 fi
 
 rm ArchLinuxARM-rpi-3-latest.tar.gz
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo " ... rootfs success!" >&3
 else
     echo " ... FAILED!" >&3
