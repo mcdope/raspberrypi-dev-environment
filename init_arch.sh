@@ -39,7 +39,7 @@ echo "[INFO] VM booting... waiting 60s for it to finish booting before continuin
 echo "[INFO] VM booting... waiting 60s for it to finish booting before continuing..." >&3
 echo
 echo
-sleep 60
+sleep 60 >&3
 
 # Install ssh key
 echo "[INFO] VM should be booted, installing ssh key for alarm and root..."
