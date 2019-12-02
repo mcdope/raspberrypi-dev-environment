@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $LOGGING -ne 1 ]; then
+if [[ "$LOGGING" -ne "1" ]]; then
     # Serious bash kungfu to log everything, see https://serverfault.com/a/103569
     # We only want to do this, if not done by update.sh already
     exec 3>&1 4>&2
