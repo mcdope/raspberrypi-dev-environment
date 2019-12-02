@@ -7,6 +7,7 @@ LOGFILE="log.out"
 exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>$LOGFILE 2>&1
+LOGGING=1
 # echo' to >&3 if you wanna display shit - everything else below will go to the file 'log.out':
 
 echo "[INFO] Killing some 'known to be assholes' processes that might interfer..." >&3
