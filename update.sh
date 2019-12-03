@@ -127,10 +127,21 @@ else
     exit 1
 fi
 
+if [ -f "/dev/mapper/loop0p1" ]; then
+    # nothing but im to lazy to google the right if syntax...
+else
+    echo "[DEBUG] Big WTF - loop0p1 not found, but kpartx returned no error..."
+    echo "[DEBUG] kpartx -l"
+    kpartx -l $IMAGEFILE
+    echo "[DEBUG] ls /dev/mapper"
+    ls /dev/mapper
+    echo "[ERROR] Big-fat-what-da-faq - loop0p1 not found but kpartx returned success?! k thx bye..." >&3
+fi
+
 echo
 echo "[INFO] Formatting FAT /boot..."
 echo -n "[INFO] Formatting FAT /boot..." >&3
-sudo mkfs.vfat /dev/mapper/loop0p1 > /dev/null
+sudo mkfs.vfat /dev/mapper/loop0p1
 if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
@@ -140,7 +151,7 @@ fi
 
 echo "[INFO] Formatting ext4 /..."
 echo -n "[INFO] Formatting ext4 /..." >&3
-sudo mkfs.ext4 /dev/mapper/loop0p2 > /dev/null
+sudo mkfs.ext4 /dev/mapper/loop0p2
 if [ $? -eq 0 ]; then
     echo " ... success!" >&3
 else
