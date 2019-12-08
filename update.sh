@@ -34,7 +34,7 @@ if [ -f "$IMAGEFILE" ]; then
 fi
 
 # Check if other loop device is active, abort in case
-if [ -f "/dev/mapper/loop0p1" ]; then
+if [ -b "/dev/mapper/loop0p1" ]; then
     echo "[ERROR] another loop device is active, please remove it before running update.sh again!"
     exit 1
 fi
