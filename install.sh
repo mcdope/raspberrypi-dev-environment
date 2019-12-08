@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Setup env
+sudo apt-add-repository -y ppa:zanchey/asciinema
 sudo apt-get update
-sudo apt-get install -y qemu qemu-system git wget unzip kpartx fdisk libarchive-tools sed uml-utilities bridge-utils net-tools sshpass dconf-cli #In case you wonder why git is here too, I distribute this not only by git...
+sudo apt-get install -y asciinema qemu qemu-system git wget unzip kpartx fdisk libarchive-tools sed uml-utilities bridge-utils net-tools sshpass dconf-cli #In case you wonder why git is here too, I distribute this not only by git...
 
 # Init git
 #if [ ! -d ".git" ]; then
@@ -14,7 +15,7 @@ if [[ ${TRACKERIGNORE} != *"$PWD"* ]]; then
     dconf write /org/freedesktop/tracker/miner/files/ignored-directories "[$TRACKERIGNORE, '$PWD']"
 fi
 
-./update.sh
+asciinema rec update.cast --overwrite -c ./update.sh
 
 echo
 echo "Done!"

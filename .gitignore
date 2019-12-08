@@ -3,4 +3,4 @@
 arch_bootpart
 .vscode/
 *.tar.gz
-log.out
+update.cast
