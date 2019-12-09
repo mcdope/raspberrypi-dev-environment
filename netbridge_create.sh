@@ -1,6 +1,10 @@
 #!/bin/bash
 LANIFACE=$(ip route get 1.1.1.1 | grep -Po '(?<=dev\s)\w+' | cut -f1 -d ' ')
 echo $LANIFACE > /tmp/netbridge_interface
+if [[ $LANIFACE == "br"* ]]; then
+  echo "[WARN] Can't create netbridge, your primary connection is already a bridge (maybe you run the script before?)"
+  exit 0
+fi
 
 echo "Creating bridge over $LANIFACE..."
 brctl addbr br0
