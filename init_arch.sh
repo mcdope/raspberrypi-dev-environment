@@ -87,15 +87,16 @@ else
 fi
 echo
 
-echo -n "[INFO] Setting keyboard layout..."
-ssh root@localhost -p 5022 "localectl set-keymap --no-convert $KEYBOARD_LAYOUT"
-if [ $? -eq 0 ]; then
-    echo " ... success!"
-else
-    echo " ... FAILED!"
-    exit 1
-fi
-echo
+# @todo: (20191209) seems this doesn't work anymore. neither local nor ssh login is possible with this active.
+# echo -n "[INFO] Setting keyboard layout..."
+# ssh root@localhost -p 5022 "localectl set-keymap --no-convert $KEYBOARD_LAYOUT"
+# if [ $? -eq 0 ]; then
+    # echo " ... success!"
+# else
+    # echo " ... FAILED!"
+    # exit 1
+# fi
+# echo
 
 # Push deploy script into VM
 echo -n "[INFO] Pushing deploy script into VM..."
